@@ -11,45 +11,10 @@ public class JFrameMain extends javax.swing.JFrame {
     private static final long serialVersionUID = -7889697995515764467L;
 
     private final EmployeeController controller;
-    private Employee employee;
 
     public JFrameMain() {
         initComponents();
         controller = EmployeeController.getInstance();
-        loadData();
-    }
-
-    private void loadData() {
-        try (java.io.FileReader fr = new java.io.FileReader("employees.txt");
-                java.io.BufferedReader br = new java.io.BufferedReader(fr)) {
-            String linea;
-            while ((linea = br.readLine()) != null) {
-                java.util.StringTokenizer st = new java.util.StringTokenizer(linea, ",");
-                employee = new Employee();
-                employee.setCode(Integer.parseInt(st.nextToken()));
-                employee.setName(st.nextToken());
-                employee.setSalary(Double.parseDouble(st.nextToken()));
-                controller.addEmployee(employee);
-            }
-        } catch (java.io.IOException | NumberFormatException ioe) {
-            System.out.println("Error: " + ioe.getMessage());
-        }
-    }
-
-    private void persistData() {
-        try (java.io.FileWriter fw = new java.io.FileWriter("employees.txt");
-                java.io.BufferedWriter bw = new java.io.BufferedWriter(fw)) {
-            for (int i = 0; i < controller.totalOfEmployees(); i++) {
-                employee = controller.getEmployee(i);
-                System.out.println(i);
-                bw.write(String.valueOf(employee.getCode() + ","
-                        + employee.getName() + ","
-                        + String.valueOf(employee.getSalary()) + ","
-                        + employee.descuentos() + "," + employee.neto()) + "\n");
-            }
-        } catch (java.io.IOException ioe) {
-            javax.swing.JOptionPane.showMessageDialog(this,"Error en grabacion del archivo: " + ioe.getMessage());
-        }
     }
 
     private int leerCodigo() {
@@ -287,7 +252,7 @@ public class JFrameMain extends javax.swing.JFrame {
         } else if (leerSueldo() == -666) {
             javax.swing.JOptionPane.showMessageDialog(this,"Ingrese sueldo numerico");
         } else {
-            employee = new Employee(leerCodigo(), leerNombre(), leerSueldo());
+            Employee employee = new Employee(leerCodigo(), leerNombre(), leerSueldo());
             if (controller.findEmployee(employee.getCode()) != -1) {
                 javax.swing.JOptionPane.showMessageDialog(this,"Codigo Repetido");
             } else {
@@ -306,7 +271,7 @@ public class JFrameMain extends javax.swing.JFrame {
             if (p == -1) {
                 javax.swing.JOptionPane.showMessageDialog(this,"Codigo NO EXISTE");
             } else {
-                employee = controller.getEmployee(p);
+                Employee employee = controller.getEmployee(p);
                 textFieldName.setText(employee.getName());
                 textFieldSalary.setText(String.valueOf(employee.getSalary()));
                 textAreaOutput.append(String.format("%-20s%-10d\n", "Codigo: ", employee.getCode()));
@@ -339,7 +304,7 @@ public class JFrameMain extends javax.swing.JFrame {
             textFieldSalary.requestFocus();
         } else {
             int p = controller.findEmployee(leerCodigo());
-            employee = new Employee(leerCodigo(), leerNombre(), leerSueldo());
+            Employee employee = new Employee(leerCodigo(), leerNombre(), leerSueldo());
             if (p == -1) {
                 controller.addEmployee(employee);
             } else {
@@ -356,7 +321,7 @@ public class JFrameMain extends javax.swing.JFrame {
             textAreaOutput.setText(String.format("%-8s%-30s%10s%10s%10s\n",
                     "Codigo", "Nombre", "Sueldo", "Dsctos", "Neto"));
             for (int i = 0; i < controller.totalOfEmployees(); i++) {
-                employee = controller.getEmployee(i);
+                Employee employee = controller.getEmployee(i);
                 textAreaOutput.append(String.format("%-8d", employee.getCode()));
                 textAreaOutput.append(String.format("%-30s", employee.getName()));
                 textAreaOutput.append(String.format("%-10.1f", employee.getSalary()));
@@ -375,7 +340,7 @@ public class JFrameMain extends javax.swing.JFrame {
             if (p == -1) {
                 javax.swing.JOptionPane.showMessageDialog(this,"Codigo NO EXISTE");
             } else {
-                employee = controller.getEmployee(p);
+                Employee employee = controller.getEmployee(p);
                 textFieldName.setText(employee.getName());
                 textFieldSalary.setText(String.valueOf(employee.getSalary()));
                 textAreaOutput.setText(String.format("%-20s%-10d\n", "Codigo: ", employee.getCode()));
@@ -394,7 +359,7 @@ public class JFrameMain extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonRemoveActionPerformed
 
     private void buttonExitAndPersistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonExitAndPersistActionPerformed
-        persistData();
+        controller.persistData();
         System.exit(0);
     }//GEN-LAST:event_buttonExitAndPersistActionPerformed
 
