@@ -25,17 +25,17 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanelGnral" alignment="0" max="32767" attributes="0"/>
+          <Component id="panelGeneral" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanelGnral" alignment="0" max="32767" attributes="0"/>
+          <Component id="panelGeneral" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JPanel" name="jPanelGnral">
+    <Container class="javax.swing.JPanel" name="panelGeneral">
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
@@ -47,8 +47,8 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="jPanelSalida" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jPanelIngreso" alignment="0" max="32767" attributes="0"/>
+                      <Component id="panelOutput" alignment="0" max="32767" attributes="0"/>
+                      <Component id="panelInput" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -58,16 +58,16 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jPanelIngreso" min="-2" max="-2" attributes="0"/>
+                  <Component id="panelInput" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jPanelSalida" max="32767" attributes="0"/>
+                  <Component id="panelOutput" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="jPanelIngreso">
+        <Container class="javax.swing.JPanel" name="panelInput">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -86,27 +86,27 @@
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jLabelCodigo" alignment="0" pref="59" max="32767" attributes="1"/>
-                          <Component id="jLabelNombre" alignment="0" pref="59" max="32767" attributes="1"/>
-                          <Component id="jLabelSueldo" alignment="0" pref="59" max="32767" attributes="1"/>
+                          <Component id="labelCode" alignment="0" pref="59" max="32767" attributes="1"/>
+                          <Component id="labelName" alignment="0" pref="59" max="32767" attributes="1"/>
+                          <Component id="labelSalary" alignment="0" pref="59" max="32767" attributes="1"/>
                       </Group>
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jTextFieldSueldo" alignment="0" pref="179" max="32767" attributes="2"/>
-                          <Component id="jTextFieldNombre" alignment="0" pref="179" max="32767" attributes="2"/>
-                          <Component id="jTextFieldCodigo" alignment="0" pref="179" max="32767" attributes="2"/>
+                          <Component id="textFieldSalary" alignment="0" pref="179" max="32767" attributes="2"/>
+                          <Component id="textFieldName" alignment="0" pref="179" max="32767" attributes="2"/>
+                          <Component id="textFieldCode" alignment="0" pref="179" max="32767" attributes="2"/>
                       </Group>
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jButtonIngresar" alignment="0" pref="120" max="32767" attributes="0"/>
-                          <Component id="jButtonListar" pref="120" max="32767" attributes="0"/>
-                          <Component id="jButtonBorrar" pref="120" max="32767" attributes="0"/>
+                          <Component id="buttonSave" alignment="0" pref="120" max="32767" attributes="0"/>
+                          <Component id="buttonList" pref="120" max="32767" attributes="0"/>
+                          <Component id="buttonDelete" pref="120" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jButtonConsultar" alignment="0" pref="126" max="32767" attributes="2"/>
-                          <Component id="jButtonEliminar" pref="126" max="32767" attributes="1"/>
-                          <Component id="jButtonModificar" pref="126" max="32767" attributes="1"/>
+                          <Component id="buttonDetail" alignment="0" pref="126" max="32767" attributes="2"/>
+                          <Component id="buttonRemove" pref="126" max="32767" attributes="1"/>
+                          <Component id="buttonModify" pref="126" max="32767" attributes="1"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -118,25 +118,25 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                              <Component id="jTextFieldCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabelCodigo" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
+                              <Component id="textFieldCode" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="labelCode" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jButtonIngresar" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButtonConsultar" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="buttonSave" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="buttonDetail" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jButtonBorrar" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButtonModificar" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextFieldNombre" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabelNombre" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
+                          <Component id="buttonDelete" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="buttonModify" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="textFieldName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelName" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jButtonListar" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButtonEliminar" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextFieldSueldo" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabelSueldo" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
+                          <Component id="buttonList" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="buttonRemove" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="textFieldSalary" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelSalary" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -144,7 +144,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabelCodigo">
+            <Component class="javax.swing.JLabel" name="labelCode">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Codigo:"/>
               </Properties>
@@ -153,7 +153,7 @@
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabelNombre">
+            <Component class="javax.swing.JLabel" name="labelName">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Nombre:"/>
               </Properties>
@@ -162,7 +162,7 @@
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabelSueldo">
+            <Component class="javax.swing.JLabel" name="labelSalary">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Sueldo:"/>
               </Properties>
@@ -171,78 +171,78 @@
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextFieldCodigo">
+            <Component class="javax.swing.JTextField" name="textFieldCode">
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextFieldNombre">
+            <Component class="javax.swing.JTextField" name="textFieldName">
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextFieldSueldo">
+            <Component class="javax.swing.JTextField" name="textFieldSalary">
             </Component>
-            <Component class="javax.swing.JButton" name="jButtonIngresar">
+            <Component class="javax.swing.JButton" name="buttonSave">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Ingresar"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonIngresarActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonSaveActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JButton" name="jButtonBorrar">
+            <Component class="javax.swing.JButton" name="buttonDelete">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Borrar"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonBorrarActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonDeleteActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JButton" name="jButtonListar">
+            <Component class="javax.swing.JButton" name="buttonList">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Listar"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonListarActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonListActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JButton" name="jButtonConsultar">
+            <Component class="javax.swing.JButton" name="buttonDetail">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Consultar"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonConsultarActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonDetailActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JButton" name="jButtonModificar">
+            <Component class="javax.swing.JButton" name="buttonModify">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Modificar"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonModificarActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonModifyActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JButton" name="jButtonEliminar">
+            <Component class="javax.swing.JButton" name="buttonRemove">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Eliminar"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonEliminarActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonRemoveActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
@@ -251,7 +251,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="jPanelSalida">
+        <Container class="javax.swing.JPanel" name="panelOutput">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -270,8 +270,8 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPaneSalida" alignment="0" pref="534" max="32767" attributes="0"/>
-                          <Component id="jButtonSalir" alignment="0" pref="526" max="32767" attributes="0"/>
+                          <Component id="scrollPaneOutput" alignment="0" pref="534" max="32767" attributes="0"/>
+                          <Component id="buttonExitAndPersist" alignment="0" pref="526" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -281,16 +281,16 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="jScrollPaneSalida" pref="267" max="32767" attributes="0"/>
+                      <Component id="scrollPaneOutput" pref="267" max="32767" attributes="0"/>
                       <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButtonSalir" min="-2" max="-2" attributes="0"/>
+                      <Component id="buttonExitAndPersist" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Container class="javax.swing.JScrollPane" name="jScrollPaneSalida">
+            <Container class="javax.swing.JScrollPane" name="scrollPaneOutput">
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
@@ -299,21 +299,21 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTextArea" name="jTextAreaSalida">
+                <Component class="javax.swing.JTextArea" name="textAreaOutput">
                   <Properties>
-                    <Property name="columns" type="int" value="20"/>
                     <Property name="editable" type="boolean" value="false"/>
+                    <Property name="columns" type="int" value="20"/>
                     <Property name="rows" type="int" value="5"/>
                   </Properties>
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="jButtonSalir">
+            <Component class="javax.swing.JButton" name="buttonExitAndPersist">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Salir Grabando"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSalirActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonExitAndPersistActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
