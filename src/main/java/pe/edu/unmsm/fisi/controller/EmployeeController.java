@@ -2,91 +2,75 @@ package pe.edu.unmsm.fisi.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pe.edu.unmsm.fisi.dao.EmployeeDAO;
+import pe.edu.unmsm.fisi.exceptions.WrongEmployeeFieldException;
 import pe.edu.unmsm.fisi.model.Employee;
 
+/**
+ * All validation will made on controller layer
+ *
+ * @author Cesardl
+ */
 public class EmployeeController {
 
     private static final Logger LOG = LoggerFactory.getLogger(EmployeeController.class);
 
-    private static final EmployeeController INSTANCE = new EmployeeController();
+    private final EmployeeDAO dao = EmployeeDAO.getInstance();
 
-    private final java.util.List<Employee> employees;
-
-    private EmployeeController() {
-        employees = new java.util.ArrayList<>();
+    private int leerCodigo(final String s) {
+        try {
+            return Integer.parseInt(s);
+        } catch (NumberFormatException nfe) {
+            return -666;
+        }
     }
 
-    public static EmployeeController getInstance() {
-        return INSTANCE;
-    }
-
-    public boolean loadData() {
-        try (java.io.FileReader fr = new java.io.FileReader("employees.txt");
-             java.io.BufferedReader br = new java.io.BufferedReader(fr)) {
-            String linea;
-            while ((linea = br.readLine()) != null) {
-                java.util.StringTokenizer st = new java.util.StringTokenizer(linea, ",");
-                Employee employee = new Employee();
-                employee.setCode(Integer.parseInt(st.nextToken()));
-                employee.setName(st.nextToken());
-                employee.setSalary(Double.parseDouble(st.nextToken()));
-                addEmployee(employee);
+    private String leerNombre(final String s) {
+        try {
+            if (s.charAt(0) == ' ') {
+                return s.trim();
             }
-            return true;
-        } catch (java.io.IOException | NumberFormatException e) {
-            LOG.error(e.getMessage(), e);
-            return false;
+            return s;
+        } catch (Exception e) {
+            return null;
         }
     }
 
-    public void persistData() {
-        try (java.io.FileWriter fw = new java.io.FileWriter("employees.txt");
-             java.io.BufferedWriter bw = new java.io.BufferedWriter(fw)) {
-            for (int i = 0; i < totalOfEmployees(); i++) {
-                Employee employee = getEmployee(i);
-                LOG.info("{}.- Code: {}", i, employee.getCode());
-                bw.write(String.valueOf(employee.getCode() + ","
-                        + employee.getName() + ","
-                        + String.valueOf(employee.getSalary()) + ","
-                        + employee.descuentos() + "," + employee.neto()) + "\n");
-            }
-        } catch (java.io.IOException e) {
-            LOG.error(e.getMessage(), e);
+    private double leerSueldo(final String s) {
+        try {
+            return Double.parseDouble(s);
+        } catch (NumberFormatException nfe) {
+            return -666;
         }
     }
 
-    public void addEmployee(Employee employee) {
-        employees.add(employee);
-    }
+    public void saveOrModify(final String textFieldCodeText, final String textFieldNameText, final String textFieldSalaryText) throws WrongEmployeeFieldException {
+        int code = leerCodigo(textFieldCodeText);
+        String name = leerNombre(textFieldNameText);
+        double salary = leerSueldo(textFieldSalaryText);
 
-    public Employee getEmployee(int index) {
-        return employees.get(index);
-    }
+        if (code == -666) {
+            throw new WrongEmployeeFieldException(WrongEmployeeFieldException.ErrorLocation.CODE, "Ingrese codigo entrero");
 
-    public void setEmployee(int index, Employee employee) {
-        employees.set(index, employee);
-    }
+        } else if (name == null) {
+            throw new WrongEmployeeFieldException(WrongEmployeeFieldException.ErrorLocation.NAME, "Ingrese nombre del empleado");
 
-    public void removeEmployee(int index) {
-        employees.remove(index);
-    }
+        } else if (salary == -666) {
+            throw new WrongEmployeeFieldException(WrongEmployeeFieldException.ErrorLocation.SALARY, "Ingrese sueldo numerico");
 
-    public void removeAll() {
-        for (int i = 0; i < totalOfEmployees(); i++) {
-            employees.remove(i);
-        }
-    }
-
-    public int findEmployee(final int code) {
-        for (int i = 0; i < totalOfEmployees(); i++) {
-            if (code == getEmployee(i).getCode()) {
-                return i;
+        } else {
+            Employee employee = dao.findEmployee(code);
+            if (employee == null) {
+                LOG.info("Saving employee");
+                dao.insert(new Employee(code, name, salary));
+            } else {
+                LOG.info("Modifying employee");
+                dao.update(new Employee(code, name, salary));
             }
         }
-        return -1;
     }
 
-    public int totalOfEmployees() {
-        return employees.size();
+    public Employee find(final String code) {
+        return null;
     }
 }

@@ -1,6 +1,6 @@
 package pe.edu.unmsm.fisi;
 
-import pe.edu.unmsm.fisi.controller.EmployeeController;
+import pe.edu.unmsm.fisi.dao.EmployeeDAO;
 import pe.edu.unmsm.fisi.view.JFrameMain;
 
 /**
@@ -11,8 +11,7 @@ import pe.edu.unmsm.fisi.view.JFrameMain;
 public class App {
 
     public static void main(String[] args) {
-        boolean hasBeenLoaded = EmployeeController.getInstance().loadData();
-        if (hasBeenLoaded) {
+        if (EmployeeDAO.getInstance().loadData()) {
             javax.swing.SwingUtilities.invokeLater(
                     () -> new JFrameMain().setVisible(true));
         } else {
