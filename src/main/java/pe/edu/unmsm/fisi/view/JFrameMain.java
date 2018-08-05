@@ -1,6 +1,11 @@
 package pe.edu.unmsm.fisi.view;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pe.edu.unmsm.fisi.controller.EmployeeController;
+import pe.edu.unmsm.fisi.exceptions.EmployeeAlreadyExistsException;
+import pe.edu.unmsm.fisi.exceptions.EmployeeNotFoundException;
+import pe.edu.unmsm.fisi.exceptions.NoDataException;
 import pe.edu.unmsm.fisi.exceptions.WrongEmployeeFieldException;
 import pe.edu.unmsm.fisi.model.Employee;
 
@@ -10,6 +15,8 @@ import pe.edu.unmsm.fisi.model.Employee;
 public class JFrameMain extends javax.swing.JFrame {
 
     private static final long serialVersionUID = -7889697995515764467L;
+
+    private static final Logger LOG = LoggerFactory.getLogger(JFrameMain.class);
 
     private final EmployeeController controller;
 
@@ -31,7 +38,7 @@ public class JFrameMain extends javax.swing.JFrame {
         textFieldName = new javax.swing.JTextField();
         textFieldSalary = new javax.swing.JTextField();
         javax.swing.JButton buttonSave = new javax.swing.JButton();
-        javax.swing.JButton buttonDelete = new javax.swing.JButton();
+        javax.swing.JButton buttonClear = new javax.swing.JButton();
         javax.swing.JButton buttonList = new javax.swing.JButton();
         javax.swing.JButton buttonDetail = new javax.swing.JButton();
         javax.swing.JButton buttonModify = new javax.swing.JButton();
@@ -59,10 +66,10 @@ public class JFrameMain extends javax.swing.JFrame {
             }
         });
 
-        buttonDelete.setText("Borrar");
-        buttonDelete.addActionListener(new java.awt.event.ActionListener() {
+        buttonClear.setText("Limpiar");
+        buttonClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonDeleteActionPerformed(evt);
+                buttonClearActionPerformed(evt);
             }
         });
 
@@ -113,7 +120,7 @@ public class JFrameMain extends javax.swing.JFrame {
                 .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(buttonSave, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                     .addComponent(buttonList, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                    .addComponent(buttonDelete, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                    .addComponent(buttonClear, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(buttonDetail, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
@@ -133,7 +140,7 @@ public class JFrameMain extends javax.swing.JFrame {
                     .addComponent(buttonDetail))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonDelete)
+                    .addComponent(buttonClear)
                     .addComponent(buttonModify)
                     .addComponent(textFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelName, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -219,7 +226,7 @@ public class JFrameMain extends javax.swing.JFrame {
 
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
         try {
-            controller.saveOrModify(textFieldCode.getText(), textFieldName.getText(), textFieldSalary.getText());
+            controller.save(textFieldCode.getText(), textFieldName.getText(), textFieldSalary.getText());
         } catch (WrongEmployeeFieldException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage());
 
@@ -236,74 +243,80 @@ public class JFrameMain extends javax.swing.JFrame {
                     textFieldSalary.requestFocus();
                     break;
             }
+        } catch (EmployeeAlreadyExistsException ex) {
+            LOG.error(ex.getMessage(), ex);
+            javax.swing.JOptionPane.showMessageDialog(this, "Empleado ya existe");
         }
     }//GEN-LAST:event_buttonSaveActionPerformed
 
     private void buttonDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDetailActionPerformed
-/*        try {
+        try {
             Employee employee = controller.find(textFieldCode.getText());
+
             textFieldName.setText(employee.getName());
             textFieldSalary.setText(String.valueOf(employee.getSalary()));
-            textAreaOutput.append(String.format("%-20s%-10d\n", "Codigo: ", employee.getCode()));
+
+            textAreaOutput.setText(String.format("%-20s%-10d\n", "Codigo: ", employee.getCode()));
             textAreaOutput.append(String.format("%-20s%-30s\n", "Nombre: ", employee.getName()));
             textAreaOutput.append(String.format("%-20s%10.1f\n", "Sueldo: ", employee.getSalary()));
             textAreaOutput.append(String.format("%-20s%10.1f\n", "Descuento: ", employee.descuentos()));
             textAreaOutput.append(String.format("%-20s%10.1f\n", "Neto: ", employee.neto()));
+
         } catch (WrongEmployeeFieldException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage());
-        }*/
+            textFieldCode.requestFocus();
+            textFieldCode.selectAll();
+
+        } catch (EmployeeNotFoundException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
     }//GEN-LAST:event_buttonDetailActionPerformed
 
-    private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
+    private void buttonClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonClearActionPerformed
         textFieldCode.setText("");
         textFieldName.setText("");
         textFieldSalary.setText("");
         textAreaOutput.setText("");
         textFieldCode.requestFocus();
         repaint();
-    }//GEN-LAST:event_buttonDeleteActionPerformed
+    }//GEN-LAST:event_buttonClearActionPerformed
 
     private void buttonModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonModifyActionPerformed
-/*        if (leerCodigo() == -666) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Ingrese codigo entero");
-            textFieldCode.requestFocus();
-        } else if (leerNombre() == null) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Ingrese nombre del empleado");
-            textFieldName.requestFocus();
-        } else if (leerSueldo() == -666) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Ingrese sueldo numerico");
-            textFieldSalary.requestFocus();
-        } else {
-            int p = controller.findEmployee(leerCodigo());
-            Employee employee = new Employee(leerCodigo(), leerNombre(), leerSueldo());
-            if (p == -1) {
-                controller.addEmployee(employee);
-            } else {
-                controller.setEmployee(p, employee);
+        try {
+            controller.modify(textFieldCode.getText(), textFieldName.getText(), textFieldSalary.getText());
+        } catch (WrongEmployeeFieldException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage());
+
+            switch (ex.getErrorLocation()) {
+                case CODE:
+                    textFieldCode.requestFocus();
+                    break;
+
+                case NAME:
+                    textFieldName.requestFocus();
+                    break;
+
+                case SALARY:
+                    textFieldSalary.requestFocus();
+                    break;
             }
-            buttonDeleteActionPerformed(evt);
-        }*/
+        } catch (EmployeeNotFoundException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
     }//GEN-LAST:event_buttonModifyActionPerformed
 
     private void buttonListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonListActionPerformed
-/*        if (controller.totalOfEmployees() == 0) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Archivo vacio");
-        } else {
+        try {
             textAreaOutput.setText(String.format("%-8s%-30s%10s%10s%10s\n",
                     "Codigo", "Nombre", "Sueldo", "Dsctos", "Neto"));
-            for (int i = 0; i < controller.totalOfEmployees(); i++) {
-                Employee employee = controller.getEmployee(i);
-                textAreaOutput.append(String.format("%-8d", employee.getCode()));
-                textAreaOutput.append(String.format("%-30s", employee.getName()));
-                textAreaOutput.append(String.format("%-10.1f", employee.getSalary()));
-                textAreaOutput.append(String.format("%-10.1f", employee.descuentos()));
-                textAreaOutput.append(String.format("%-10.1f\n", employee.neto()));
-            }
-        }*/
+            textAreaOutput.append(controller.list());
+        } catch (NoDataException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+        }
     }//GEN-LAST:event_buttonListActionPerformed
 
     private void buttonRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRemoveActionPerformed
-/*        int code = leerCodigo();
+        /*        int code = leerCodigo();
         if (code == -666) {
             javax.swing.JOptionPane.showMessageDialog(this, "Ingrese codigo entero");
         } else {
@@ -330,7 +343,7 @@ public class JFrameMain extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonRemoveActionPerformed
 
     private void buttonExitAndPersistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonExitAndPersistActionPerformed
-//        controller.persistData();
+        controller.persist();
         System.exit(0);
     }//GEN-LAST:event_buttonExitAndPersistActionPerformed
 

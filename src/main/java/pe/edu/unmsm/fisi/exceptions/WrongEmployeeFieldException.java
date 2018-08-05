@@ -12,14 +12,10 @@ public class WrongEmployeeFieldException extends Exception {
 
     private static final long serialVersionUID = -4619684837787782252L;
 
-    private ErrorLocation errorLocation;
+    private final ErrorLocation errorLocation;
 
     public enum ErrorLocation {
         CODE, NAME, SALARY
-    }
-
-    public WrongEmployeeFieldException(final String message) {
-        super(message);
     }
 
     public WrongEmployeeFieldException(final ErrorLocation errorLocation, final String message) {
