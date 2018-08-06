@@ -21,9 +21,13 @@ public class EmployeeController {
 
     private static final Logger LOG = LoggerFactory.getLogger(EmployeeController.class);
 
-    private final EmployeeDAO dao = EmployeeDAO.getInstance();
+    private final EmployeeDAO dao;
 
-    private int leerCodigo(final String s) {
+    public EmployeeController(EmployeeDAO dao) {
+        this.dao = dao;
+    }
+
+    private int readCode(final String s) {
         try {
             return Integer.parseInt(s);
         } catch (NumberFormatException nfe) {
@@ -31,7 +35,7 @@ public class EmployeeController {
         }
     }
 
-    private String leerNombre(final String s) {
+    private String readName(final String s) {
         try {
             if (s.charAt(0) == ' ') {
                 return s.trim();
@@ -42,7 +46,7 @@ public class EmployeeController {
         }
     }
 
-    private double leerSueldo(final String s) {
+    private double readSalary(final String s) {
         try {
             return Double.parseDouble(s);
         } catch (NumberFormatException nfe) {
@@ -53,7 +57,7 @@ public class EmployeeController {
     public String list() throws NoDataException {
         List<Employee> employees = dao.list();
         if (employees.isEmpty()) {
-            throw new NoDataException("Archivo vacio");
+            throw new NoDataException();
 
         } else {
             return employees.stream().map(employee
@@ -67,9 +71,9 @@ public class EmployeeController {
     }
 
     public void save(final String textFieldCodeText, final String textFieldNameText, final String textFieldSalaryText) throws WrongEmployeeFieldException, EmployeeAlreadyExistsException {
-        int code = leerCodigo(textFieldCodeText);
-        String name = leerNombre(textFieldNameText);
-        double salary = leerSueldo(textFieldSalaryText);
+        int code = readCode(textFieldCodeText);
+        String name = readName(textFieldNameText);
+        double salary = readSalary(textFieldSalaryText);
 
         if (code == -666) {
             throw new WrongEmployeeFieldException(WrongEmployeeFieldException.ErrorLocation.CODE, "Ingrese codigo entrero");
@@ -92,9 +96,9 @@ public class EmployeeController {
     }
 
     public void modify(final String textFieldCodeText, final String textFieldNameText, final String textFieldSalaryText) throws WrongEmployeeFieldException, EmployeeNotFoundException {
-        int code = leerCodigo(textFieldCodeText);
-        String name = leerNombre(textFieldNameText);
-        double salary = leerSueldo(textFieldSalaryText);
+        int code = readCode(textFieldCodeText);
+        String name = readName(textFieldNameText);
+        double salary = readSalary(textFieldSalaryText);
 
         if (code == -666) {
             throw new WrongEmployeeFieldException(WrongEmployeeFieldException.ErrorLocation.CODE, "Ingrese codigo entrero");
@@ -117,7 +121,7 @@ public class EmployeeController {
     }
 
     public Employee find(final String textFieldCodeText) throws WrongEmployeeFieldException, EmployeeNotFoundException {
-        int code = leerCodigo(textFieldCodeText);
+        int code = readCode(textFieldCodeText);
         if (code == -666) {
             throw new WrongEmployeeFieldException(WrongEmployeeFieldException.ErrorLocation.CODE, "Ingrese codigo entrero");
         }

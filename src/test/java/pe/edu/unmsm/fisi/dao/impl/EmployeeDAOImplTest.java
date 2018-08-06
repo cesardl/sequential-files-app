@@ -1,26 +1,28 @@
-package pe.edu.unmsm.fisi.dao;
+package pe.edu.unmsm.fisi.dao.impl;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import pe.edu.unmsm.fisi.FakeData;
+import pe.edu.unmsm.fisi.dao.EmployeeDAO;
 import pe.edu.unmsm.fisi.model.Employee;
 
 import static org.junit.Assert.*;
 
 /**
- * Created on 04/08/2018.
+ * Created on 05/08/2018.
  *
  * @author Cesardl
  */
-public class EmployeeDAOTest {
+public class EmployeeDAOImplTest {
 
-    private EmployeeDAO dao = EmployeeDAO.getInstance();
+    private EmployeeDAO dao = EmployeeDAOImpl.getInstance();
 
     @Before
     public void setUp() {
-        dao.insert(new Employee(10001, "Georgi Facello", 85097));
-        dao.insert(new Employee(10002, "Bezalel Simmel", 65909));
-        dao.insert(new Employee(10003, "Parto Bamford", 43699));
+        dao.insert(FakeData.getEmployee1());
+        dao.insert(FakeData.getEmployee2());
+        dao.insert(FakeData.getEmployee3());
     }
 
     @Test

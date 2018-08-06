@@ -3,6 +3,7 @@ package pe.edu.unmsm.fisi.view;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pe.edu.unmsm.fisi.controller.EmployeeController;
+import pe.edu.unmsm.fisi.dao.impl.EmployeeDAOImpl;
 import pe.edu.unmsm.fisi.exceptions.EmployeeAlreadyExistsException;
 import pe.edu.unmsm.fisi.exceptions.EmployeeNotFoundException;
 import pe.edu.unmsm.fisi.exceptions.NoDataException;
@@ -22,7 +23,7 @@ public class JFrameMain extends javax.swing.JFrame {
 
     public JFrameMain() {
         initComponents();
-        controller = new EmployeeController();
+        controller = new EmployeeController(EmployeeDAOImpl.getInstance());
     }
 
     @SuppressWarnings("unchecked")
@@ -225,24 +226,13 @@ public class JFrameMain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
+        LOG.trace(evt.paramString());
         try {
             controller.save(textFieldCode.getText(), textFieldName.getText(), textFieldSalary.getText());
         } catch (WrongEmployeeFieldException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage());
 
-            switch (ex.getErrorLocation()) {
-                case CODE:
-                    textFieldCode.requestFocus();
-                    break;
-
-                case NAME:
-                    textFieldName.requestFocus();
-                    break;
-
-                case SALARY:
-                    textFieldSalary.requestFocus();
-                    break;
-            }
+            processWrongExceptionOnField(ex.getErrorLocation());
         } catch (EmployeeAlreadyExistsException ex) {
             LOG.error(ex.getMessage(), ex);
             javax.swing.JOptionPane.showMessageDialog(this, "Empleado ya existe");
@@ -250,17 +240,18 @@ public class JFrameMain extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonSaveActionPerformed
 
     private void buttonDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDetailActionPerformed
+        LOG.trace(evt.paramString());
         try {
             Employee employee = controller.find(textFieldCode.getText());
 
             textFieldName.setText(employee.getName());
             textFieldSalary.setText(String.valueOf(employee.getSalary()));
 
-            textAreaOutput.setText(String.format("%-20s%-10d\n", "Codigo: ", employee.getCode()));
-            textAreaOutput.append(String.format("%-20s%-30s\n", "Nombre: ", employee.getName()));
-            textAreaOutput.append(String.format("%-20s%10.1f\n", "Sueldo: ", employee.getSalary()));
-            textAreaOutput.append(String.format("%-20s%10.1f\n", "Descuento: ", employee.descuentos()));
-            textAreaOutput.append(String.format("%-20s%10.1f\n", "Neto: ", employee.neto()));
+            textAreaOutput.setText(String.format("%-20s%-10d%n", "Codigo: ", employee.getCode()));
+            textAreaOutput.append(String.format("%-20s%-30s%n", "Nombre: ", employee.getName()));
+            textAreaOutput.append(String.format("%-20s%10.1f%n", "Sueldo: ", employee.getSalary()));
+            textAreaOutput.append(String.format("%-20s%10.1f%n", "Descuento: ", employee.descuentos()));
+            textAreaOutput.append(String.format("%-20s%10.1f%n", "Neto: ", employee.neto()));
 
         } catch (WrongEmployeeFieldException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage());
@@ -273,6 +264,7 @@ public class JFrameMain extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonDetailActionPerformed
 
     private void buttonClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonClearActionPerformed
+        LOG.trace(evt.paramString());
         textFieldCode.setText("");
         textFieldName.setText("");
         textFieldSalary.setText("");
@@ -282,32 +274,22 @@ public class JFrameMain extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonClearActionPerformed
 
     private void buttonModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonModifyActionPerformed
+        LOG.trace(evt.paramString());
         try {
             controller.modify(textFieldCode.getText(), textFieldName.getText(), textFieldSalary.getText());
         } catch (WrongEmployeeFieldException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage());
 
-            switch (ex.getErrorLocation()) {
-                case CODE:
-                    textFieldCode.requestFocus();
-                    break;
-
-                case NAME:
-                    textFieldName.requestFocus();
-                    break;
-
-                case SALARY:
-                    textFieldSalary.requestFocus();
-                    break;
-            }
+            processWrongExceptionOnField(ex.getErrorLocation());
         } catch (EmployeeNotFoundException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }//GEN-LAST:event_buttonModifyActionPerformed
 
     private void buttonListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonListActionPerformed
+        LOG.trace(evt.paramString());
         try {
-            textAreaOutput.setText(String.format("%-8s%-30s%10s%10s%10s\n",
+            textAreaOutput.setText(String.format("%-8s%-30s%10s%10s%10s%n",
                     "Codigo", "Nombre", "Sueldo", "Dsctos", "Neto"));
             textAreaOutput.append(controller.list());
         } catch (NoDataException e) {
@@ -316,6 +298,7 @@ public class JFrameMain extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonListActionPerformed
 
     private void buttonRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRemoveActionPerformed
+        LOG.trace(evt.paramString());
         /*        int code = leerCodigo();
         if (code == -666) {
             javax.swing.JOptionPane.showMessageDialog(this, "Ingrese codigo entero");
@@ -327,11 +310,11 @@ public class JFrameMain extends javax.swing.JFrame {
                 Employee employee = controller.getEmployee(p);
                 textFieldName.setText(employee.getName());
                 textFieldSalary.setText(String.valueOf(employee.getSalary()));
-                textAreaOutput.setText(String.format("%-20s%-10d\n", "Codigo: ", employee.getCode()));
-                textAreaOutput.append(String.format("%-20s%-30s\n", "Nombre: ", employee.getName()));
-                textAreaOutput.append(String.format("%-20s%10.1f\n", "Sueldo: ", employee.getSalary()));
-                textAreaOutput.append(String.format("%-20s%10.1f\n", "Descuento: ", employee.descuentos()));
-                textAreaOutput.append(String.format("%-20s%10.1f\n", "Neto: ", employee.neto()));
+                textAreaOutput.setText(String.format("%-20s%-10d%n", "Codigo: ", employee.getCode()));
+                textAreaOutput.append(String.format("%-20s%-30s%n", "Nombre: ", employee.getName()));
+                textAreaOutput.append(String.format("%-20s%10.1f%n", "Sueldo: ", employee.getSalary()));
+                textAreaOutput.append(String.format("%-20s%10.1f%n", "Descuento: ", employee.descuentos()));
+                textAreaOutput.append(String.format("%-20s%10.1f%n", "Neto: ", employee.neto()));
             }
             int option = javax.swing.JOptionPane.showConfirmDialog(this,
                     "Esta seguro de Eliminar a este empleado", "Responder", 0);
@@ -343,9 +326,26 @@ public class JFrameMain extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonRemoveActionPerformed
 
     private void buttonExitAndPersistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonExitAndPersistActionPerformed
+        LOG.trace(evt.paramString());
         controller.persist();
         System.exit(0);
     }//GEN-LAST:event_buttonExitAndPersistActionPerformed
+
+    private void processWrongExceptionOnField(WrongEmployeeFieldException.ErrorLocation errorLocation) {
+        switch (errorLocation) {
+            case CODE:
+                textFieldCode.requestFocus();
+                break;
+
+            case NAME:
+                textFieldName.requestFocus();
+                break;
+
+            case SALARY:
+                textFieldSalary.requestFocus();
+                break;
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea textAreaOutput;

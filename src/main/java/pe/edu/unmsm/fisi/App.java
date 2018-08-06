@@ -1,6 +1,6 @@
 package pe.edu.unmsm.fisi;
 
-import pe.edu.unmsm.fisi.dao.EmployeeDAO;
+import pe.edu.unmsm.fisi.dao.impl.EmployeeDAOImpl;
 import pe.edu.unmsm.fisi.view.JFrameMain;
 
 /**
@@ -11,7 +11,7 @@ import pe.edu.unmsm.fisi.view.JFrameMain;
 public class App {
 
     public static void main(String[] args) {
-        if (EmployeeDAO.getInstance().loadData()) {
+        if (EmployeeDAOImpl.getInstance().loadData()) {
             javax.swing.SwingUtilities.invokeLater(
                     () -> new JFrameMain().setVisible(true));
         } else {
