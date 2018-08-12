@@ -60,6 +60,20 @@ public class EmployeeDAOImplTest {
         assertNull(employee);
     }
 
+    @Test
+    public void deleteEmployeeTest() {
+        boolean result = dao.delete(FakeData.getEmployee1().getCode());
+
+        assertTrue(result);
+    }
+
+    @Test
+    public void deleteNotRegisteredEmployeeTest() {
+        boolean result = dao.delete(10005);
+
+        assertFalse(result);
+    }
+
     @After
     public void setDown() {
         dao.list().clear();

@@ -20,4 +20,6 @@ public interface EmployeeDAO {
     boolean insert(Employee employee);
 
     boolean update(Employee employee);
+
+    boolean delete(int code);
 }

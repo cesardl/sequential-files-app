@@ -99,4 +99,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
                 .orElse(null);
         return peek != null;
     }
+
+    @Override
+    public boolean delete(int code) {
+        return employees.removeIf(employee -> code == employee.getCode());
+    }
 }

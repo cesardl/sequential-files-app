@@ -1,4 +1,6 @@
-895,pablo Cesar,784.2,117.63,666.57
+895,Pablo Cesar Diaz Lurita,784.2,117.63,666.57
 777,carlos Enrique,321.0,48.15,272.85
-523,efrain joaquin,321.0,48.15,272.85
+523,Joaquin Illatingo,3201.0,480.15,2720.85
 7778,Angelina Jolie,654.3,98.145,556.155
+524,Efraín Armas,1520.23,228.0345,1292.1955
+8956666,Pablo Roberto Diaz Lurita,784.2,117.63,666.57

@@ -19,8 +19,7 @@ import java.util.Collections;
 
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
@@ -124,10 +123,9 @@ public class EmployeeControllerTest {
 
     @Test(expected = EmployeeNotFoundException.class)
     public void modifyNotExistingEmployeeTest() throws WrongEmployeeFieldException, EmployeeNotFoundException {
-        int code = 1000;
-        when(dao.findEmployee(code)).thenReturn(null);
+        when(dao.findEmployee(Integer.parseInt(FAKE_CODE))).thenReturn(null);
 
-        controller.modify(String.valueOf(code), FAKE_NAME, FAKE_SALARY);
+        controller.modify(FAKE_CODE, FAKE_NAME, FAKE_SALARY);
 
         verify(dao, times(1)).findEmployee(anyInt());
         verifyNoMoreInteractions(dao);
@@ -159,6 +157,62 @@ public class EmployeeControllerTest {
         exceptionRule.expect(hasProperty("errorLocation", is(WrongEmployeeFieldException.ErrorLocation.SALARY)));
 
         controller.modify(FAKE_CODE, FAKE_NAME, "A1De4");
+
+        fail();
+    }
+
+    @Test
+    public void findEmployeeTest() throws WrongEmployeeFieldException, EmployeeNotFoundException {
+        when(dao.findEmployee(Integer.valueOf(FAKE_CODE))).thenReturn(mock(Employee.class));
+
+        controller.find(FAKE_CODE);
+
+        verify(dao, times(1)).findEmployee(anyInt());
+        verifyNoMoreInteractions(dao);
+    }
+
+    @Test
+    public void findEmployeeWithWrongCodeFieldTest() throws WrongEmployeeFieldException, EmployeeNotFoundException {
+        exceptionRule.expect(WrongEmployeeFieldException.class);
+        exceptionRule.expect(hasProperty("errorLocation", is(WrongEmployeeFieldException.ErrorLocation.CODE)));
+
+        controller.find("A1De4");
+
+        fail();
+    }
+
+    @Test(expected = EmployeeNotFoundException.class)
+    public void findNotExistingEmployeeTest() throws WrongEmployeeFieldException, EmployeeNotFoundException {
+        when(dao.findEmployee(Integer.parseInt(FAKE_CODE))).thenReturn(null);
+
+        controller.find(FAKE_CODE);
+
+        verify(dao, times(1)).findEmployee(anyInt());
+        verifyNoMoreInteractions(dao);
+    }
+
+    @Test
+    public void deleteEmployeeTest() throws WrongEmployeeFieldException {
+        when(dao.delete(Integer.parseInt(FAKE_CODE))).thenReturn(true);
+
+        boolean result = controller.delete(FAKE_CODE);
+        assertTrue(result);
+    }
+
+    @Test
+    public void deleteNotExistingEmployeeTest() throws WrongEmployeeFieldException {
+        when(dao.delete(Integer.parseInt(FAKE_CODE))).thenReturn(false);
+
+        boolean result = controller.delete(FAKE_CODE);
+        assertFalse(result);
+    }
+
+    @Test
+    public void deleteEmployeeWithWrongCodeFieldTest() throws WrongEmployeeFieldException {
+        exceptionRule.expect(WrongEmployeeFieldException.class);
+        exceptionRule.expect(hasProperty("errorLocation", is(WrongEmployeeFieldException.ErrorLocation.CODE)));
+
+        controller.delete("A1De4");
 
         fail();
     }

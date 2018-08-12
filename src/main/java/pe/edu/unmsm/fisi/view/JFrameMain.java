@@ -119,14 +119,14 @@ public class JFrameMain extends javax.swing.JFrame {
                     .addComponent(textFieldCode, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(buttonSave, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                    .addComponent(buttonList, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                    .addComponent(buttonClear, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                    .addComponent(buttonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonList, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonClear, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(buttonDetail, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                    .addComponent(buttonRemove, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                    .addComponent(buttonModify, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
+                    .addComponent(buttonDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonModify, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         panelInputLayout.setVerticalGroup(
@@ -229,13 +229,15 @@ public class JFrameMain extends javax.swing.JFrame {
         LOG.trace(evt.paramString());
         try {
             controller.save(textFieldCode.getText(), textFieldName.getText(), textFieldSalary.getText());
+
+            javax.swing.JOptionPane.showMessageDialog(this, "Datos del empleado fueron guardados correctamente", getTitle(), javax.swing.JOptionPane.INFORMATION_MESSAGE);
         } catch (WrongEmployeeFieldException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage());
 
             processWrongExceptionOnField(ex.getErrorLocation());
         } catch (EmployeeAlreadyExistsException ex) {
             LOG.error(ex.getMessage(), ex);
-            javax.swing.JOptionPane.showMessageDialog(this, "Empleado ya existe");
+            javax.swing.JOptionPane.showMessageDialog(this, "Código de empleado ya existe");
         }
     }//GEN-LAST:event_buttonSaveActionPerformed
 
@@ -259,7 +261,7 @@ public class JFrameMain extends javax.swing.JFrame {
             textFieldCode.selectAll();
 
         } catch (EmployeeNotFoundException ex) {
-            javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage());
+            javax.swing.JOptionPane.showMessageDialog(this, "Código de empleado no registrado");
         }
     }//GEN-LAST:event_buttonDetailActionPerformed
 
@@ -277,12 +279,14 @@ public class JFrameMain extends javax.swing.JFrame {
         LOG.trace(evt.paramString());
         try {
             controller.modify(textFieldCode.getText(), textFieldName.getText(), textFieldSalary.getText());
+
+            javax.swing.JOptionPane.showMessageDialog(this, "Datos del empleado fueron modificados correctamente", getTitle(), javax.swing.JOptionPane.INFORMATION_MESSAGE);
         } catch (WrongEmployeeFieldException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage());
 
             processWrongExceptionOnField(ex.getErrorLocation());
         } catch (EmployeeNotFoundException ex) {
-            javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage());
+            javax.swing.JOptionPane.showMessageDialog(this, "Código de empleado no registrado");
         }
     }//GEN-LAST:event_buttonModifyActionPerformed
 
@@ -299,30 +303,22 @@ public class JFrameMain extends javax.swing.JFrame {
 
     private void buttonRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRemoveActionPerformed
         LOG.trace(evt.paramString());
-        /*        int code = leerCodigo();
-        if (code == -666) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Ingrese codigo entero");
-        } else {
-            int p = controller.findEmployee(code);
-            if (p == -1) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Codigo NO EXISTE");
+        try {
+            boolean result = controller.delete(textFieldCode.getText());
+
+            if (result) {
+                buttonClearActionPerformed(evt);
+
             } else {
-                Employee employee = controller.getEmployee(p);
-                textFieldName.setText(employee.getName());
-                textFieldSalary.setText(String.valueOf(employee.getSalary()));
-                textAreaOutput.setText(String.format("%-20s%-10d%n", "Codigo: ", employee.getCode()));
-                textAreaOutput.append(String.format("%-20s%-30s%n", "Nombre: ", employee.getName()));
-                textAreaOutput.append(String.format("%-20s%10.1f%n", "Sueldo: ", employee.getSalary()));
-                textAreaOutput.append(String.format("%-20s%10.1f%n", "Descuento: ", employee.descuentos()));
-                textAreaOutput.append(String.format("%-20s%10.1f%n", "Neto: ", employee.neto()));
+                javax.swing.JOptionPane.showMessageDialog(this, "Código de empleado no registrado");
             }
-            int option = javax.swing.JOptionPane.showConfirmDialog(this,
-                    "Esta seguro de Eliminar a este empleado", "Responder", 0);
-            if (option == 0) {
-                controller.removeEmployee(p);
-            }
+
+        } catch (WrongEmployeeFieldException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage());
+            textFieldCode.requestFocus();
+            textFieldCode.selectAll();
+
         }
-        buttonDeleteActionPerformed(evt);*/
     }//GEN-LAST:event_buttonRemoveActionPerformed
 
     private void buttonExitAndPersistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonExitAndPersistActionPerformed

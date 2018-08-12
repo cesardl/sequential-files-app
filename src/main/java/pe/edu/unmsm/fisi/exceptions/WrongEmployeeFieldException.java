@@ -23,6 +23,11 @@ public class WrongEmployeeFieldException extends Exception {
         this.errorLocation = errorLocation;
     }
 
+    public WrongEmployeeFieldException(final ErrorLocation errorLocation, final String message, Throwable cause) {
+        super(message, cause);
+        this.errorLocation = errorLocation;
+    }
+
     public ErrorLocation getErrorLocation() {
         return errorLocation;
     }

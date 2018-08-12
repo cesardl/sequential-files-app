@@ -27,27 +27,27 @@ public class EmployeeController {
         this.dao = dao;
     }
 
-    private int readCode(final String s) {
+    private int readCode(final String s) throws WrongEmployeeFieldException {
         try {
             return Integer.parseInt(s);
         } catch (NumberFormatException nfe) {
-            return -666;
+            throw new WrongEmployeeFieldException(WrongEmployeeFieldException.ErrorLocation.CODE, "Ingrese codigo entrero", nfe);
         }
     }
 
-    private String readName(final String s) {
+    private String readName(final String s) throws WrongEmployeeFieldException {
         if (s.isEmpty()) {
-            return null;
+            throw new WrongEmployeeFieldException(WrongEmployeeFieldException.ErrorLocation.NAME, "Ingrese nombre del empleado");
         } else {
             return s.trim();
         }
     }
 
-    private double readSalary(final String s) {
+    private double readSalary(final String s) throws WrongEmployeeFieldException {
         try {
             return Double.parseDouble(s);
         } catch (NumberFormatException nfe) {
-            return -666;
+            throw new WrongEmployeeFieldException(WrongEmployeeFieldException.ErrorLocation.SALARY, "Ingrese sueldo numerico", nfe);
         }
     }
 
@@ -57,6 +57,7 @@ public class EmployeeController {
             throw new NoDataException();
 
         } else {
+            LOG.info("Reading {} employees", employees.size());
             return employees.stream().map(employee
                     -> String.format("%-8d", employee.getCode())
                     .concat(String.format("%-30s", employee.getName()))
@@ -72,23 +73,12 @@ public class EmployeeController {
         String name = readName(textFieldNameText);
         double salary = readSalary(textFieldSalaryText);
 
-        if (code == -666) {
-            throw new WrongEmployeeFieldException(WrongEmployeeFieldException.ErrorLocation.CODE, "Ingrese codigo entrero");
-
-        } else if (name == null) {
-            throw new WrongEmployeeFieldException(WrongEmployeeFieldException.ErrorLocation.NAME, "Ingrese nombre del empleado");
-
-        } else if (salary == -666) {
-            throw new WrongEmployeeFieldException(WrongEmployeeFieldException.ErrorLocation.SALARY, "Ingrese sueldo numerico");
-
+        Employee employee = dao.findEmployee(code);
+        if (employee == null) {
+            LOG.info("Saving employee");
+            dao.insert(new Employee(code, name, salary));
         } else {
-            Employee employee = dao.findEmployee(code);
-            if (employee == null) {
-                LOG.info("Saving employee");
-                dao.insert(new Employee(code, name, salary));
-            } else {
-                throw new EmployeeAlreadyExistsException();
-            }
+            throw new EmployeeAlreadyExistsException();
         }
     }
 
@@ -97,31 +87,17 @@ public class EmployeeController {
         String name = readName(textFieldNameText);
         double salary = readSalary(textFieldSalaryText);
 
-        if (code == -666) {
-            throw new WrongEmployeeFieldException(WrongEmployeeFieldException.ErrorLocation.CODE, "Ingrese codigo entrero");
-
-        } else if (name == null) {
-            throw new WrongEmployeeFieldException(WrongEmployeeFieldException.ErrorLocation.NAME, "Ingrese nombre del empleado");
-
-        } else if (salary == -666) {
-            throw new WrongEmployeeFieldException(WrongEmployeeFieldException.ErrorLocation.SALARY, "Ingrese sueldo numerico");
-
+        Employee employee = dao.findEmployee(code);
+        if (employee == null) {
+            throw new EmployeeNotFoundException();
         } else {
-            Employee employee = dao.findEmployee(code);
-            if (employee == null) {
-                throw new EmployeeNotFoundException();
-            } else {
-                LOG.info("Modifying employee");
-                dao.update(new Employee(code, name, salary));
-            }
+            LOG.info("Modifying employee");
+            dao.update(new Employee(code, name, salary));
         }
     }
 
     public Employee find(final String textFieldCodeText) throws WrongEmployeeFieldException, EmployeeNotFoundException {
         int code = readCode(textFieldCodeText);
-        if (code == -666) {
-            throw new WrongEmployeeFieldException(WrongEmployeeFieldException.ErrorLocation.CODE, "Ingrese codigo entrero");
-        }
 
         Employee employee = dao.findEmployee(code);
         if (employee == null) {
@@ -129,6 +105,12 @@ public class EmployeeController {
         } else {
             return employee;
         }
+    }
+
+    public boolean delete(String textFieldCodeText) throws WrongEmployeeFieldException {
+        int code = readCode(textFieldCodeText);
+
+        return dao.delete(code);
     }
 
     public void persist() {
