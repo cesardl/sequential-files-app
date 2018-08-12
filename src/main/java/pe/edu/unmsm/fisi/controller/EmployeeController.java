@@ -36,13 +36,10 @@ public class EmployeeController {
     }
 
     private String readName(final String s) {
-        try {
-            if (s.charAt(0) == ' ') {
-                return s.trim();
-            }
-            return s;
-        } catch (Exception e) {
+        if (s.isEmpty()) {
             return null;
+        } else {
+            return s.trim();
         }
     }
 

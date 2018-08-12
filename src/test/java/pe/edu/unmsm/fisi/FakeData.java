@@ -12,6 +12,10 @@ import java.util.List;
  */
 public class FakeData {
 
+    public static final String FAKE_CODE = "10000";
+    public static final String FAKE_NAME = "Fake Name";
+    public static final String FAKE_SALARY = "12312.21";
+
     private static final List<Employee> employees;
 
     private static final Employee employee1;
