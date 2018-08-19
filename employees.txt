@@ -4,3 +4,4 @@
 7778,Angelina Jolie,654.3,98.145,556.155
 524,Efraín Armas,1520.23,228.0345,1292.1955
 8956666,Pablo Roberto Diaz Lurita,784.2,117.63,666.57
+5555,Carlos Rodriguez,2581.82,387.273,2194.547

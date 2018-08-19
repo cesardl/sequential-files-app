@@ -10,6 +10,8 @@ import pe.edu.unmsm.fisi.exceptions.NoDataException;
 import pe.edu.unmsm.fisi.exceptions.WrongEmployeeFieldException;
 import pe.edu.unmsm.fisi.model.Employee;
 
+import javax.swing.JOptionPane;
+
 /**
  * @author Cesardl
  */
@@ -230,14 +232,14 @@ public class JFrameMain extends javax.swing.JFrame {
         try {
             controller.save(textFieldCode.getText(), textFieldName.getText(), textFieldSalary.getText());
 
-            javax.swing.JOptionPane.showMessageDialog(this, "Datos del empleado fueron guardados correctamente", getTitle(), javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Datos del empleado fueron guardados correctamente", getTitle(), JOptionPane.INFORMATION_MESSAGE);
         } catch (WrongEmployeeFieldException ex) {
-            javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage());
+            JOptionPane.showMessageDialog(this, ex.getMessage(), getTitle(), JOptionPane.WARNING_MESSAGE);
 
             processWrongExceptionOnField(ex.getErrorLocation());
         } catch (EmployeeAlreadyExistsException ex) {
             LOG.error(ex.getMessage(), ex);
-            javax.swing.JOptionPane.showMessageDialog(this, "Código de empleado ya existe");
+            JOptionPane.showMessageDialog(this, "Código de empleado ya existe");
         }
     }//GEN-LAST:event_buttonSaveActionPerformed
 
@@ -256,12 +258,12 @@ public class JFrameMain extends javax.swing.JFrame {
             textAreaOutput.append(String.format("%-20s%10.1f%n", "Neto: ", employee.neto()));
 
         } catch (WrongEmployeeFieldException ex) {
-            javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage());
+            JOptionPane.showMessageDialog(this, ex.getMessage(), getTitle(), JOptionPane.WARNING_MESSAGE);
             textFieldCode.requestFocus();
             textFieldCode.selectAll();
 
         } catch (EmployeeNotFoundException ex) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Código de empleado no registrado");
+            JOptionPane.showMessageDialog(this, "Código de empleado no registrado");
         }
     }//GEN-LAST:event_buttonDetailActionPerformed
 
@@ -280,13 +282,13 @@ public class JFrameMain extends javax.swing.JFrame {
         try {
             controller.modify(textFieldCode.getText(), textFieldName.getText(), textFieldSalary.getText());
 
-            javax.swing.JOptionPane.showMessageDialog(this, "Datos del empleado fueron modificados correctamente", getTitle(), javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Datos del empleado fueron modificados correctamente", getTitle(), JOptionPane.INFORMATION_MESSAGE);
         } catch (WrongEmployeeFieldException ex) {
-            javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage());
+            JOptionPane.showMessageDialog(this, ex.getMessage(), getTitle(), JOptionPane.WARNING_MESSAGE);
 
             processWrongExceptionOnField(ex.getErrorLocation());
         } catch (EmployeeNotFoundException ex) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Código de empleado no registrado");
+            JOptionPane.showMessageDialog(this, "Código de empleado no registrado");
         }
     }//GEN-LAST:event_buttonModifyActionPerformed
 
@@ -297,7 +299,7 @@ public class JFrameMain extends javax.swing.JFrame {
                     "Codigo", "Nombre", "Sueldo", "Dsctos", "Neto"));
             textAreaOutput.append(controller.list());
         } catch (NoDataException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+            JOptionPane.showMessageDialog(this, e.getMessage(), getTitle(), JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_buttonListActionPerformed
 
@@ -310,11 +312,11 @@ public class JFrameMain extends javax.swing.JFrame {
                 buttonClearActionPerformed(evt);
 
             } else {
-                javax.swing.JOptionPane.showMessageDialog(this, "Código de empleado no registrado");
+                JOptionPane.showMessageDialog(this, "Código de empleado no registrado");
             }
 
         } catch (WrongEmployeeFieldException ex) {
-            javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage());
+            JOptionPane.showMessageDialog(this, ex.getMessage(), getTitle(), JOptionPane.WARNING_MESSAGE);
             textFieldCode.requestFocus();
             textFieldCode.selectAll();
 
